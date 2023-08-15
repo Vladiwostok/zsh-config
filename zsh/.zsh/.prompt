@@ -1,0 +1,35 @@
+### ZSH Prompt config
+
+autoload -U colors && colors
+
+##### ZSH PROMPT #####
+# Set desired variables, unset them at the end of the file
+
+# Current directory
+# Color: Yellow
+# If there are more than 5 items, only show the last 3
+CURRENT_LOCATION='%F{220} %(5~|.../%3~|%4~)%f'
+
+# Current username / $USERNAME
+# Color: Light Blue
+USER='%F{110}%n%f'
+
+# Hostname
+# Color: Blue
+# Alternatively, %M could be used for the full hostname
+HOSTNAME="%F{33}%m%f"
+
+# Root user
+# Color: Red
+# Display '<root>' if the user is root, '->' otherwise
+IS_ROOT='%F{196}%B%(!.%U<root>%u.->)%b%f'
+
+# Previous command status
+# Display a green box if the previous command executed with 0,
+# red box otherwise
+PREV_CMD_STATUS='%(?.%K{34} %k.%K{196} %k)'
+
+# Assemble desired prompt here
+PROMPT="$PREV_CMD_STATUS $CURRENT_LOCATION $IS_ROOT "
+
+unset CURRENT_LOCATION USER HOSTNAME IS_ROOT PREV_CMD_STATUS

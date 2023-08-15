@@ -1,0 +1,176 @@
+### ZSH ls colors config
+
+LS_COLORS=
+
+##### Format: <item>=<style>:<background_color>:<text_color>
+##### Order not important
+
+### <item>:
+# rs = reset to normal (normal)
+# fi = file
+# di = directory
+# ln = symlink
+# mh = multi hardlink
+# pi = named pipe (FIFO)
+# so = socket
+# do = door
+# bd = block device
+# cd = character device
+# or = orphan (broken) symlink
+# mi = missing file (missing link target, observable with 'ls -l')
+# fi = regular file
+# su = set user ID
+# sg = set group ID
+# ca = file with capability
+# tw = sticky writeable directory
+# ow = writable directory
+# st = sticky directory
+
+### <style>:
+# 00 = normal
+# 01 = bold
+# 02 = darker?
+# 03 = italic
+# 04 = underline
+# 05 = blink
+# 06 = blink?
+# 07 = reverse (background color)
+# 08 = concealed (hidden)
+# 09 = strikethrough
+
+### <text_color>:
+# 30 = black
+# 31 = red
+# 32 = green
+# 33 = yellow
+# 34 = blue
+# 35 = magenta
+# 36 = cyan
+# 37 = white
+
+### <background_color>:
+# 40 = black
+# 41 = red
+# 42 = green
+# 43 = yellow
+# 44 = blue
+# 45 = magenta
+# 46 = cyan
+# 47 = white
+# Use 38;05;[0-255] for 256 colors and run colortest.sh for available colors
+# Start with 38 for foreground, 48 for background
+
+# Adds desired array with already formatted strings to LS_COLORS var
+# Usage: add_array ARRAY
+add_array() {
+    local array=("$@")
+
+    for item in ${array[@]}; do
+        LS_COLORS+="$item:"
+    done
+}
+
+# Adds desired array with single color to LS_COLORS var
+# Usage: add_array_with_color COLOR_STRING ARRAY
+add_array_with_color() {
+    local color="$1"
+    shift
+    local array=("$@")
+
+    for item in ${array[@]}; do
+        LS_COLORS+="$item=$color:"
+    done
+}
+
+################################# CORE SYMBOLS #################################
+CORE=(
+    'rs=0' 'di=01;38;05;214' 'fi=0' 'ex=01;38;05;46'
+
+    'ln=01;38;05;51' 'or=01;09;38;05;51'
+        'mi=01;03;09;38;05;51' 'mh=01;38;05;39'
+
+    'pi=01;38;05;70;48;05;16' 'so=01;38;05;71;48;05;16'
+        'do=01;38;05;71;48;05;16'
+
+    'bd=01;38;05;21;48;05;70' 'cd=01;38;05;21;48;05;142'
+
+    'su=01;38;05;190;48;05;52' 'sg=01;38;05;226;48;05;52'
+        'ca=01;38;05;229;48;05;52'
+
+    'tw=01;38;05;214;48;05;22' 'ow=01;38;05;214;48;05;23'
+        'st=01;38;05;214;48;05;58'
+)
+
+add_array "${CORE[@]}"
+
+unset CORE
+################################################################################
+
+################################### ARCHIVES ###################################
+ARCHIVES=(
+    '*.tar' '*.tgz' '*.arc' '*.arj' '*.taz' '*.lha' '*.lz4' '*.lzh' '*.lzma'
+    '*.tlz' '*.txz' '*.tzo' '*.t7z' '*.zip' '*.z' '*.dz' '*.gz' '*.lrz' '*.lz'
+    '*.lzo' '*.xz' '*.zst' '*.tzst' '*.bz2' '*.bz' '*.tbz' '*.tbz2' '*.tz'
+    '*.deb' '*.rpm' '*.jar' '*.war' '*.ear' '*.sar' '*.rar' '*.alz' '*.ace'
+    '*.zoo' '*.cpio' '*.7z' '*.rz' '*.cab' '*.wim' '*.swm' '*.dwm' '*.esd' 
+)
+
+add_array_with_color '01;38;05;201' "${ARCHIVES[@]}"
+
+unset ARCHIVES
+################################################################################
+
+################################ IMAGE FORMATS #################################
+IMG=(
+    '*.jpg' '*.jpeg' '*.mjpg' '*.mjpeg' '*.gif' '*.bmp' '*.pbm' '*.pgm' '*.ppm'
+    '*.tga' '*.xbm' '*.xpm' '*.tif' '*.tiff' '*.png' '*.svg' '*.svgz' '*.mng'
+    '*.pcx' '*.xwd' '*.xcf' '*.cgm' '*.emf'
+)
+
+add_array_with_color '01;38;05;226' "${IMG[@]}"
+
+unset IMG
+################################################################################
+
+################################ VIDEO FORMATS #################################
+VIDEO=(
+    '*.mov' '*.mpg' '*.mpeg' '*.m2v' '*.mkv' '*.webm' '*.webp' '*.ogm' '*.mp4'
+    '*.m4v' '*.mp4v' '*.vob' '*.qt' '*.nuv' '*.wmv' '*.asf' '*.rm' '*.rmvb'
+    '*.flc' '*.fli' '*.flv' '*.gl' '*.dl' '*.yuv' '*.ogv' '*.ogx'
+)
+
+add_array_with_color '01;38;05;166' "${VIDEO[@]}"
+
+unset VIDEO
+################################################################################
+
+################################ AUDIO FORMATS #################################
+AUDIO=(
+    '*.avi' '*.aac' '*.au' '*.flac' '*.m4a' '*.mid' '*.midi' '*.mka' '*.mp3'
+    '*.mpc' '*.ogg' '*.ra' '*.wav' '*.oga' '*.opus' '*.spx' '*.xspf'
+)
+
+add_array_with_color '01;38;05;208' "${AUDIO[@]}"
+
+unset AUDIO
+################################################################################
+
+############################### EXTRA EXTENSIONS ###############################
+# Files ending in '.'
+NO_EXTENSION='*.=01;38;05;197'
+MDFILE='*.md=01;38;05;33'
+PDF='*.pdf=01;38;05;196'
+
+EXTRA=($NO_EXTENSION $MDFILE $PDF)
+
+add_array "${EXTRA[@]}"
+
+unset NO_EXTENSION MDFILE PDF EXTRA
+################################################################################
+
+unset -f add_array add_array_with_color
+
+# Trim the trailing ':' if it exists
+LS_COLORS=${LS_COLORS%:}
+
+export LS_COLORS
