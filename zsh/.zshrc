@@ -1,6 +1,8 @@
 
 export ZSH="$HOME/.zsh"
 
+autoload -U compinit; compinit
+
 source "$ZSH/.history"
 source "$ZSH/.prompt"
 source "$ZSH/.ls_colors"
